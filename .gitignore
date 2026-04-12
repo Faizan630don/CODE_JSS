@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+gesture_data.json
+*.task
+.mplconfig/
+.cache/
+aurashield/node_modules/
+aurashield/dist/
+.DS_Store
