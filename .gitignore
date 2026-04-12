@@ -10,3 +10,4 @@ gesture_data.json
 aurashield/node_modules/
 aurashield/dist/
 .DS_Store
+video_detection.py
