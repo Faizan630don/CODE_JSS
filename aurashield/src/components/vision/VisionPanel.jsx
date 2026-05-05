@@ -5,8 +5,8 @@ function TerminalBar({ label, value, max = 1 }) {
   // Value is 0-1
   const pct = Math.round(Math.min(100, Math.max(0, value * 100)))
   const filled = Math.round(pct / 5)
-  const empty  = 20 - filled
-  const color  = pct >= 70 ? '#00FF41' : pct >= 45 ? '#FFAA00' : '#FF2A2A'
+  const empty = 20 - filled
+  const color = pct >= 70 ? '#00FF41' : pct >= 45 ? '#FFAA00' : '#FF2A2A'
   return (
     <div className="flex items-center gap-2 font-mono text-xs">
       <span className="w-40 shrink-0 text-[#4A4A4A]">{label}</span>
@@ -23,7 +23,7 @@ export function VisionPanel({ reducedMotion }) {
   const [status, setStatus] = useState('idle') // idle | uploading | analyzing | complete | error
   const [result, setResult] = useState(null)
   const [progress, setProgress] = useState(0)
-  
+
   const fileInputRef = useRef(null)
 
   const handleFileChange = (e) => {
@@ -70,42 +70,42 @@ export function VisionPanel({ reducedMotion }) {
     }
   }
 
-  const verdictText = 
+  const verdictText =
     status === 'complete' && result
       ? result.prediction === 'REAL'
         ? '> VERDICT: [AUTHENTIC MEDIA]'
         : '> VERDICT: [SYNTHETIC DEEPFAKE DETECTED]'
       : status === 'analyzing' || status === 'uploading' ? '> VERDICT: [COMPUTING SIGNATURE...]'
-      : status === 'error' ? '> VERDICT: [FILE UNREADABLE OR CORRUPT]'
-      : '> VERDICT: [AWAITING UPLOAD]'
+        : status === 'error' ? '> VERDICT: [FILE UNREADABLE OR CORRUPT]'
+          : '> VERDICT: [AWAITING UPLOAD]'
 
-  const verdictColor = 
+  const verdictColor =
     status === 'complete' && result
       ? result.prediction === 'REAL' ? '#00FF41' : '#FF2A2A'
       : status === 'analyzing' || status === 'uploading' ? '#FFAA00'
-      : status === 'error' ? '#FF2A2A'
-      : '#4A4A4A'
+        : status === 'error' ? '#FF2A2A'
+          : '#4A4A4A'
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-6">
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        
+
         {/* Left — Uploader */}
         <div className="terminal-panel p-4">
           <div className="panel-header mb-4">MEDIA INGESTION PORTAL</div>
-          
+
           <div className="flex flex-col h-32 justify-center items-center rounded-sm border border-dashed border-[#00FF41]/30 bg-[#00FF41]/5 mb-4 relative cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-            <input 
-              type="file" 
-              accept="video/mp4,video/quicktime,video/webm" 
-              ref={fileInputRef} 
-              className="hidden" 
+            <input
+              type="file"
+              accept="video/mp4,video/quicktime,video/webm"
+              ref={fileInputRef}
+              className="hidden"
               onChange={handleFileChange}
             />
             {file ? (
               <div className="text-[#00FF41] font-mono text-xs">
-                FILE MOUNTED: {file.name} ({(file.size / (1024*1024)).toFixed(2)} MB)
+                FILE MOUNTED: {file.name} ({(file.size / (1024 * 1024)).toFixed(2)} MB)
               </div>
             ) : (
               <div className="text-[#00FF41]/70 font-mono text-xs">
@@ -139,12 +139,12 @@ export function VisionPanel({ reducedMotion }) {
           <div className="panel-header mb-4">FORENSICS ENGINE</div>
           <div className="space-y-1.5 font-mono text-xs">
             {[
-              ['Engine Profile',  'Deep Spectral Flux'],
-              ['Model Node',      'local-v1A-vid'],
-              ['Container Type',  file ? file.type || 'unknown' : '—'],
-              ['Ingestion',      status === 'uploading' ? 'UPLOADING...' : status === 'analyzing' || status === 'complete' ? 'SECURED' : 'PENDING'],
-              ['Frame Read',     status === 'analyzing' ? 'SCANNING' : status === 'complete' ? 'DONE' : 'IDLE'],
-              ['Trust Score',    status === 'analyzing' ? 'CALCULATING...' : status === 'complete' ? `${(result?.confidence * 100).toFixed(1)}%` : '—'],
+              ['Engine Profile', 'Deep Spectral Flux'],
+              ['Model Node', 'local-v1A-vid'],
+              ['Container Type', file ? file.type || 'unknown' : '—'],
+              ['Ingestion', status === 'uploading' ? 'UPLOADING...' : status === 'analyzing' || status === 'complete' ? 'SECURED' : 'PENDING'],
+              ['Frame Read', status === 'analyzing' ? 'SCANNING' : status === 'complete' ? 'DONE' : 'IDLE'],
+              ['Trust Score', status === 'analyzing' ? 'CALCULATING...' : status === 'complete' ? `${(result?.confidence * 100).toFixed(1)}%` : '—'],
             ].map(([label, val]) => (
               <div key={label} className="flex justify-between">
                 <span className="text-[#4A4A4A]">{`> ${label}:`}</span>
@@ -175,8 +175,8 @@ export function VisionPanel({ reducedMotion }) {
           <div className="panel-header mb-4">SIGNATURE BREAKDOWN</div>
           <div className="space-y-2">
             <TerminalBar label="Temporal Consistency" value={result.analysis.temporal_consistency} />
-            <TerminalBar label="Visual Integrity"     value={result.analysis.visual_integrity} />
-            <TerminalBar label="Anomaly Score"        value={result.analysis.anomaly_score} />
+            <TerminalBar label="Visual Integrity" value={result.analysis.visual_integrity} />
+            <TerminalBar label="Anomaly Score" value={result.analysis.anomaly_score} />
           </div>
         </div>
       )}
