@@ -1,13 +1,21 @@
+# Python
 __pycache__/
 *.pyc
 .venv/
 venv/
-.env
-gesture_data.json
-*.task
-.mplconfig/
-.cache/
-aurashield/node_modules/
-aurashield/dist/
+backend/.env
+backend/gesture_data.json
+backend/*.task
+backend/video_detection.py
+backend/server.log
+
+# Node
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+
+# System
 .DS_Store
-video_detection.py
+.cache/
+.mplconfig/

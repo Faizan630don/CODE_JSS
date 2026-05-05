@@ -16,7 +16,7 @@ import { ScanlineOverlay } from './components/ui/ScanlineOverlay'
 import { SosOverlay } from './components/sos/SosOverlay'
 import { VisionPanel } from './components/vision/VisionPanel'
 
-const API = 'http://localhost:8000/gestures'
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000/gestures'
 
 function routeLogSide(msg) {
   if (!msg?.message) return null

@@ -19,7 +19,10 @@ except Exception:
     pass
 
 import cv2
-import customtkinter as ctk
+try:
+    import customtkinter as ctk
+except ImportError:
+    ctk = None
 import mediapipe as mp
 
 

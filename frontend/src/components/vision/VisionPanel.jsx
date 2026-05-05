@@ -51,7 +51,7 @@ export function VisionPanel({ reducedMotion }) {
       }, 500)
 
       setStatus('analyzing')
-      const response = await fetch('http://localhost:8000/predict', {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL || 'http://localhost:8000'}/predict`, {
         method: 'POST',
         body: formData
       })

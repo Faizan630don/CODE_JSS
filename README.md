@@ -1,63 +1,43 @@
-# AURASHIELD — NEXUS AUTH
+# CODE_JSS - AuraShield Project
 
-Single-page **React + Vite** frontend with **Three.js** (React Three Fiber) and a **FastAPI** WebSocket bridge around `gesture_auth.py`. The original Tk desktop app is unchanged; the server imports its MediaPipe/OpenCV logic and processes **browser webcam** frames (JPEG base64 over `ws://localhost:8000/ws/gesture`).
+This project is split into a **Frontend** and **Backend** for easier deployment.
 
-## Prerequisites
+## Project Structure
 
-- Python 3.10+ (MediaPipe supported version)
-- Node 18+
+- `/frontend`: React + Vite application.
+- `/backend`: FastAPI server with gesture and voice authentication.
 
-## Backend
+## Deployment Instructions
 
-From the **project root** (`CODE_JSS/`):
+### 1. Backend Deployment (FastAPI)
+The backend is a Python application. You can deploy it to platforms like **Render**, **Heroku**, or **DigitalOcean**.
 
+- **Environment Variables**: Copy `backend/.env.example` to `.env` and fill in your details (SMTP for SOS alerts).
+- **Entry Point**: `python server.py`
+- **Port**: The server uses the `PORT` environment variable (defaults to 8000).
+- **Docker**: A `Dockerfile` is provided for containerized deployment.
+
+### 2. Frontend Deployment (React)
+The frontend is a static site built with Vite. You can deploy it to **Vercel**, **Netlify**, or **GitHub Pages**.
+
+- **Environment Variables**: Create a `.env` file in the `frontend` directory based on `.env.example`.
+  - `VITE_API_URL`: The full URL of your deployed backend (e.g., `https://your-backend.onrender.com/gestures`).
+  - `VITE_WS_URL`: The WebSocket URL of your deployed backend (e.g., `wss://your-backend.onrender.com/ws/gesture`).
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+
+## Local Development
+
+### Backend
 ```bash
+cd backend
 pip install -r requirements.txt
 python server.py
 ```
 
-This starts Uvicorn on **http://0.0.0.0:8000** with:
-
-- WebSocket: `ws://localhost:8000/ws/gesture`
-- REST (gesture cards): `GET http://localhost:8000/gestures`
-
-On first run, MediaPipe may download `.task` model files into the project directory (same behavior as `gesture_auth.py`).
-
-To use the **original desktop UI** only:
-
+### Frontend
 ```bash
-python gesture_auth.py
-```
-
-## Frontend
-
-```bash
-cd aurashield
+cd frontend
 npm install
 npm run dev
 ```
-
-Open **http://localhost:5173**.
-
-### Stack (as installed)
-
-- React 18, Vite
-- `three`, `@react-three/fiber`, `@react-three/drei`, `@react-three/postprocessing`
-- TailwindCSS, Framer Motion, GSAP (available for further polish), Lucide React
-
-## Flow
-
-1. Start `server.py`, then `npm run dev`.
-2. Allow **camera** in the browser.
-3. Enter a signature ID → **Record** (≈4.5s capture) → gesture saved to `gesture_data.json`.
-4. **Activate Nexus** → live frames + metrics; hold a matching pose with face visible for the hold window to get **IDENTITY CONFIRMED**.
-
-If the socket cannot connect after several retries, the UI shows **NEXUS UNREACHABLE** — ensure `python server.py` is running.
-
-## Layout
-
-- `gesture_auth.py` — original recorder/detector (unchanged).
-- `server.py` — FastAPI + `WebGestureSession` (headless; no Tk, no OpenCV window).
-- `aurashield/` — Vite app; Nexus UI, hooks, and Three.js scene under `src/`.
-
-Future modules (blink SOS, voice, deepfake, dashboard) have **commented slots** in `App.jsx` and reserved keys in `AuraShieldContext.jsx`.

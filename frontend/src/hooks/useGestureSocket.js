@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-const WS_URL = 'ws://localhost:8000/ws/gesture'
+const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/gesture'
 /** ~30fps camera digest, handled via manual 1/3 downsampling below */
 export const GESTURE_FPS_MS = Math.round(1000 / 30)
 

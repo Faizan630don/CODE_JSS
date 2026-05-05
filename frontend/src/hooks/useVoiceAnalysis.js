@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-export function useVoiceAnalysis(url = 'ws://localhost:8000/ws/voice') {
+export function useVoiceAnalysis(url = import.meta.env.VITE_WS_VOICE_URL || 'ws://localhost:8000/ws/voice') {
   const [isRecording, setIsRecording] = useState(false)
   const [audioData, setAudioData] = useState(new Uint8Array(32))
   const [confidence, setConfidence] = useState(0)           // 0-100 human trust score
