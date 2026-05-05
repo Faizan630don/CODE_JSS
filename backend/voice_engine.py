@@ -1,6 +1,6 @@
 try:
     import sounddevice as sd
-except ImportError:
+except (ImportError, OSError, Exception):
     sd = None
 import numpy as np
 import librosa

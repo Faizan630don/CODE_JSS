@@ -21,7 +21,7 @@ except Exception:
 import cv2
 try:
     import customtkinter as ctk
-except ImportError:
+except (ImportError, Exception):
     ctk = None
 import mediapipe as mp
 
