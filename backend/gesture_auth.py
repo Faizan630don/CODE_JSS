@@ -23,6 +23,12 @@ try:
     import customtkinter as ctk
 except (ImportError, Exception):
     ctk = None
+
+if ctk is None:
+    # Dummy class to prevent inheritance errors in headless environments
+    class MockCtk:
+        class CTk: pass
+    ctk = MockCtk()
 import mediapipe as mp
 
 
