@@ -219,7 +219,7 @@ class WebGestureSession:
         self._record_end_time = 0.0
         self._record_started_at = 0.0
         self._record_target_frames = 45
-        self._record_min_frames = 30
+        self._record_min_frames = 15
         self._record_vectors: List[List[float]] = []
         self._record_wrist_points: List[Tuple[float, float]] = []
         self._record_face_vectors: List[List[float]] = []
@@ -275,7 +275,7 @@ class WebGestureSession:
         self._record_wrist_points = []
         self._record_face_vectors = []
         self._record_started_at = time.time()
-        self._record_end_time = self._record_started_at + 4.5
+        self._record_end_time = self._record_started_at + 10.0
         self._record_status_tick = 0
 
     def start_monitor(self) -> None:
