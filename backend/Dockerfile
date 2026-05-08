@@ -4,6 +4,7 @@ FROM python:3.10-slim
 # Install system dependencies for OpenCV and MediaPipe
 RUN apt-get update && apt-get install -y \
     libgl1 \
+    libegl1 \
     libgles2 \
     libglib2.0-0 \
     libsndfile1 \
